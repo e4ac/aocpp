@@ -1,0 +1,49 @@
+# prerequisites
+*.d
+
+# compiled object files
+*.lo
+*.o
+*.obj
+*.slo
+bin/
+
+# precompiled headers
+*.gch
+*.pch
+
+# linker files
+*.ilk
+
+# debugger files
+*.pdb
+
+# compiled dynamic libraries
+*.dll
+*.dylib
+*.so
+
+# fortran module files
+*.mod
+*.smod
+
+# compiled static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# executables
+*.app
+*.exe
+*.out
+
+# debug information files
+*.dwo
+
+# ide
+.vscode/
+.idea/
+
+# system
+.DS_Store

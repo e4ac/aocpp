@@ -1,0 +1,38 @@
+name: CICD
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          - os: ubuntu-latest
+            build_output: ubuntu
+            c_compiler: gcc
+            cpp_compiler: g++
+          - os: macos-latest
+            build_output: macos
+            c_compiler: clang
+            cpp_compiler: clang++
+          - os: windows-latest
+            build_output: windows
+            c_compiler: cl
+            cpp_compiler: cl
+
+    steps:
+      - uses: actions/checkout@v7
+      - uses: lukka/get-cmake@latest
+      - name: Configure CMake
+        run: cmake -B ${{ matrix.build_output }} -DCMAKE_C_COMPILER=${{ matrix.c_compiler }} -DCMAKE_CXX_COMPILER=${{ matrix.cpp_compiler }} -S ${{ github.workspace }}
+      - name: Build
+        run: cmake --build ${{ matrix.build_output }} --parallel 8
+      - name: Test
+        run: ctest --test-dir ${{ matrix.build_output }} --parallel 8
